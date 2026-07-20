@@ -1,17 +1,44 @@
-# devcontainer-for-claude-gemini
+# AI Agent Workspace
 
-Claude CodeとGemini CLIを使用できるdevcontainer環境を作成しました。
-[Claude Codeの公式リファレンスリポジトリ](https://github.com/anthropics/claude-code/tree/main)をベースに作成しています。
-同じコンテナ内でClaude CodeとGemini CLIを切り替えることが可能です。
+Claude Code、Gemini CLI、Codex CLI、Antigravity CLI を同じ Dev Container で利用するための開発環境です。VS Code または Cursor でコンテナを起動すれば、各 CLI をすぐに使い始められます。
 
-## 使用手順
+## 含まれる主なツール
 
-- `git clone`で当プロジェクトを落としてくる
-- VSCodeやCursorで当プロジェクトを開き、「Reopen in Container」をクリック
-- コンテナ環境内で`claude`コマンドを実行すればClaude Codeが立ち上げる
-- 同じく、`gemini`コマンドを実行すると、Gemini CLIが立ち上がる
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- [Codex CLI](https://developers.openai.com/codex/cli/)
+- Antigravity CLI（`agy`）
+- Git、GitHub CLI（`gh`）、Docker CLI
 
-### 初回のみ
+コンテナは Node.js 20（Debian Bookworm）をベースにしています。
 
-- Claude Code及びGemini CLIの初期設定を聞かれるので、好みのテーマを選択したり、認証を行うこと
-- 二度目以降は聞かれない
+## 使い方
+
+1. このリポジトリをクローンします。
+2. VS Code または Cursor でリポジトリを開き、**Reopen in Container** を実行します。
+3. コンテナの作成完了後、ターミナルで使いたい CLI を実行します。
+
+```bash
+claude
+gemini
+codex
+agy
+```
+
+初回起動時は、各 CLI の案内に従ってテーマ設定や認証を行ってください。
+
+## 設定の永続化
+
+以下の設定ディレクトリは Docker の名前付きボリュームにマウントされるため、コンテナをリビルドしても認証情報や設定が保持されます。
+
+- Claude Code: `/home/node/.claude`
+- Gemini CLI: `/home/node/.gemini`
+- Codex CLI: `/home/node/.codex`
+- GitHub CLI: `/home/node/.config/gh`
+- Google Cloud CLI: `/home/node/.config/gcloud`
+
+認証をやり直したい場合は、対応する Docker ボリュームを削除してください。
+
+## 任意の環境変数
+
+コンテナ内の Git のユーザー情報は、`GIT_USER_NAME` と `GIT_USER_EMAIL` が設定されている場合に初回セットアップで自動設定されます。`.env` から環境変数を読み込む場合は、[`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json) の `runArgs` を有効にしてください。
