@@ -37,11 +37,11 @@
       "type": "volume"
     }
   ],
-  // Docker起動時に .env ファイルを読み込ませる設定
-  "runArgs": [
-    "--env-file",
-    ".env"
-  ],
+  // Docker起動時に .env ファイルを読み込ませる設定（.envが存在しない場合があるためデフォルトはコメントアウト）
+  // "runArgs": [
+  //   "--env-file",
+  //   ".env"
+  // ],
   "customizations": {
     "vscode": {
       // コンテナ起動時に自動で入れたいVS Code拡張機能
